@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Util\Codes;
-use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 
@@ -31,10 +31,10 @@ class PageController extends FOSRestController
      *   }
      * )
      *
-     * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing pages.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
+     * @Rest\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing pages.")
+     * @Rest\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
      *
-     * @Annotations\View(
+     * @Rest\View(
      *  templateVar="pages"
      * )
      *
@@ -65,7 +65,7 @@ class PageController extends FOSRestController
      *   }
      * )
      *
-     * @Annotations\View(templateVar="page")
+     * @Rest\View(templateVar="page")
      *
      * @param int     $id      the page id
      *
@@ -90,7 +90,7 @@ class PageController extends FOSRestController
      *   }
      * )
      *
-     * @Annotations\View(
+     * @Rest\View(
      *  templateVar = "form"
      * )
      *
@@ -114,7 +114,7 @@ class PageController extends FOSRestController
      *   }
      * )
      *
-     * @Annotations\View(
+     * @Rest\View(
      *  template = "AcmeBlogBundle:Page:newPage.html.twig",
      *  statusCode = Codes::HTTP_BAD_REQUEST,
      *  templateVar = "form"
@@ -157,7 +157,7 @@ class PageController extends FOSRestController
      *   }
      * )
      *
-     * @Annotations\View(
+     * @Rest\View(
      *  template = "AcmeBlogBundle:Page:editPage.html.twig",
      *  templateVar = "form"
      * )
@@ -210,7 +210,7 @@ class PageController extends FOSRestController
      *   }
      * )
      *
-     * @Annotations\View(
+     * @Rest\View(
      *  template = "AcmeBlogBundle:Page:editPage.html.twig",
      *  templateVar = "form"
      * )
