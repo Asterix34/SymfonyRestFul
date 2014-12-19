@@ -1,0 +1,12 @@
+parameters:
+    acme_blog.page.handler.class: Acme\BlogBundle\Handler\PageHandler
+    acme_blog.page.class: Acme\BlogBundle\Entity\Page
+
+
+services:
+    acme_blog.page.handler:
+        class: "%acme_blog.page.handler.class%"
+        arguments: 
+            - "@doctrine.orm.entity_manager"
+            - "%acme_blog.page.class%"
+            - "@form.factory"
