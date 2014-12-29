@@ -1,0 +1,18 @@
+{% block content %}
+    <h1 class="title">{{ 'author.list'|trans({}, 'AcmeBlogBundle') }}</h1>
+
+    <ul id="author-list">
+        {% for author in authors %}
+            <li>
+                <a href="{{ path('api_1_get_author', {'id': author.id}) }}">{{ author.name }}</a>
+                {#[<a href="{{ path('api_1_edit_authors', {'id': author.id}) }}">{{ 'author.edit.link'|trans({}, 'AcmeBlogBundle') }}</a>]#}
+                {#[<a href="{{ path('api_1_remove_authors', {'id': author.id}) }}">{{ 'author.remove.link'|trans({}, 'AcmeBlogBundle') }}</a>]#}
+            </li>
+        {% else %}
+            <li>{{ 'author.list.empty'|trans({}, 'AcmeBlogBundle') }}</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="{{ path('api_1_new_author') }}">{{ 'author.new.link'|trans({}, 'AcmeBlogBundle') }}</a>
+    </p>
+{% endblock %}

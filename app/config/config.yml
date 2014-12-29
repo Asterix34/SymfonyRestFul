@@ -5,7 +5,7 @@ imports:
 framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
-    secret:          %secret%
+    secret: %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
@@ -99,3 +99,9 @@ fos_rest:
 
 nelmio_api_doc:
     name: Page API
+    
+bazinga_hateoas:
+    metadata:
+        cache:                file
+        file_cache:
+            dir:              %kernel.cache_dir%/hateoas

@@ -3,3 +3,14 @@ acme_blog_page:
     prefix: /v1
     resource: Acme\BlogBundle\Controller\PageController
     name_prefix:  api_1_ # naming collision
+    
+acme_blog_author:
+    type: rest
+    prefix: /v1
+    resource: Acme\BlogBundle\Controller\AuthorController
+    name_prefix:  api_1_ # naming collision
+    
+acme_blog_comment:
+    type: rest
+    parent: acme_blog_page
+    resource: Acme\BlogBundle\Controller\CommentController

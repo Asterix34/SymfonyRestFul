@@ -5,12 +5,18 @@ namespace Acme\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Acme\BlogBundle\Model\PageInterface;
 use Doctrine\Common\Collections\Collection;
+use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * Page
  *
  * @ORM\Table()
  * @ORM\Entity()
+ * @Serializer\XmlRoot("page")
+ * @Hateoas\Relation("self", href = "expr('/api/v1/pages/' ~ object.getId())")
+ * @Hateoas\Relation("author", href = "expr('/api/v1/authors/' ~ object.getAuthor().getId())")
+ * @Hateoas\Relation("comments", href = "expr('/api/v1/pages/' ~ object.getId() ~ '/comments')")
  */
 class Page implements PageInterface
 {
@@ -49,6 +55,7 @@ class Page implements PageInterface
      *
      * @ORM\ManyToOne(targetEntity="Author", inversedBy="pages")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Exclude()
      */
     private $author;
     
@@ -56,6 +63,7 @@ class Page implements PageInterface
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="page")
+     * @Serializer\Exclude()
      */
     private $comments;
 

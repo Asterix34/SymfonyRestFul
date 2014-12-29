@@ -3,16 +3,29 @@
 namespace Acme\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Acme\BlogBundle\Model\AuthorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * Author
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Acme\BlogBundle\Entity\AuthorRepository")
+ * @Serializer\XmlRoot("author")
+ * 
+ * @Hateoas\Relation("self", href = "expr('/api/v1/authors/' ~ object.getId())")
+ * @Hateoas\Relation(
+ *     name = "pages",
+ *     embedded = @Hateoas\Embedded(
+ *         "expr(object.getPages())",
+ *         xmlElementName = "pages"
+ *     )
+ * )
  * 
  */
-class Author
+class Author implements AuthorInterface
 {
     /**
      * @var integer
@@ -20,6 +33,7 @@ class Author
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\XmlAttribute()
      */
     private $id;
 
@@ -50,6 +64,7 @@ class Author
      * @var Collection
      * 
      * @ORM\OneToMany(targetEntity="Page", mappedBy="author", cascade="remove")
+     * @Serializer\Exclude();
      */
     private $pages;
 
@@ -58,6 +73,7 @@ class Author
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="author", cascade="remove")
+     * @Serializer\Exclude();
      */
     private $comments;
     

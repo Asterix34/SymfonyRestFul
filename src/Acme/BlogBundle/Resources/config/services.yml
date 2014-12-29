@@ -1,6 +1,8 @@
 parameters:
     acme_blog.page.handler.class: Acme\BlogBundle\Handler\PageHandler
     acme_blog.page.class: Acme\BlogBundle\Entity\Page
+    acme_blog.author.class: Acme\BlogBundle\Entity\Author
+    acme_blog.comment.class: Acme\BlogBundle\Entity\Comment
 
 
 services:
@@ -9,4 +11,16 @@ services:
         arguments: 
             - "@doctrine.orm.entity_manager"
             - "%acme_blog.page.class%"
+            - "@form.factory"
+    acme_blog.author.handler:
+        class: "%acme_blog.page.handler.class%"
+        arguments: 
+            - "@doctrine.orm.entity_manager"
+            - "%acme_blog.author.class%"
+            - "@form.factory"
+    acme_blog.comment.handler:
+        class: "%acme_blog.page.handler.class%"
+        arguments: 
+            - "@doctrine.orm.entity_manager"
+            - "%acme_blog.comment.class%"
             - "@form.factory"
