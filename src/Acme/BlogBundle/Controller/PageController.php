@@ -243,6 +243,33 @@ class PageController extends FOSRestController
             return $exception->getForm();
         }
     }
+    
+    /**
+     * Delete a Page.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Delete a Page for a given id",
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
+     *
+     * @param mixed     $id      the page id
+     *
+     * @return View
+     *
+     * @throws NotFoundHttpException when page not exist
+     */
+    public function deletePageAction($id)
+    {
+    	$page = $this->getOr404($id);
+    
+    	$this->container->get('acme_blog.page.handler')->delete($id);
+    	
+    	return $this->view(null, Codes::HTTP_NO_CONTENT);
+    }
 
     /**
      * Fetch a Page or throw an 404 Exception.

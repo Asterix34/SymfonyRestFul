@@ -4,6 +4,7 @@ namespace Acme\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Acme\BlogBundle\Model\PageInterface;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Page
@@ -21,6 +22,14 @@ class Page implements PageInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creationDate", type="datetime")
+     */
+    private $creationDate;
+    
 
     /**
      * @var string
@@ -34,7 +43,21 @@ class Page implements PageInterface
      * @ORM\Column(name="body", type="text")
      */
     private $body;
-
+    
+    /**
+     * @var Author
+     *
+     * @ORM\ManyToOne(targetEntity="Author", inversedBy="pages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+    
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="page")
+     */
+    private $comments;
 
     /**
      * Get id
@@ -90,5 +113,93 @@ class Page implements PageInterface
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     * @return Page
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime 
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->creationDate = new \DateTime();
+    }
+    
+    /**
+     * Set author
+     *
+     * @param \Acme\BlogBundle\Entity\Author $author
+     * @return Page
+     */
+    public function setAuthor(\Acme\BlogBundle\Entity\Author $author)
+    {
+        $this->author = $author;
+    
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \Acme\BlogBundle\Entity\Author 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Acme\BlogBundle\Entity\Comment $comments
+     * @return Page
+     */
+    public function addComment(\Acme\BlogBundle\Entity\Comment $comment)
+    {
+    	$comment->setPage($this);
+        $this->comments[] = $comment;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Acme\BlogBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Acme\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

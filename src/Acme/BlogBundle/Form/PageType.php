@@ -17,6 +17,10 @@ class PageType extends AbstractType
         $builder
             ->add('title')
             ->add('body')
+            ->add('author', 'entity', array(
+					  'class'        => 'AcmeBlogBundle:Author',
+					  'property'     => 'name')
+            		)
         ;
     }
     

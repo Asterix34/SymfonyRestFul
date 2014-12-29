@@ -87,6 +87,22 @@ class PageHandler implements PageHandlerInterface
     {
         return $this->processForm($page, $parameters, 'PATCH');
     }
+    
+    /**
+     * Delete a Page.
+     *
+     * @param mixed $id
+     *
+     * @return void
+     */
+    public function delete($id)
+    {
+    	$page = $this->get($id);
+    	$this->om->remove($page);
+    	$this->om->flush ();
+    	
+    	return null;
+    }
 
     /**
      * Processes the form.

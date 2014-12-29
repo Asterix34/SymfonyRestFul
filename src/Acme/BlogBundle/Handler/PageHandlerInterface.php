@@ -61,4 +61,15 @@ interface PageHandlerInterface
      * @return PageInterface
      */
     public function patch(PageInterface $page, array $parameters);
+    
+    /**
+     * Delete a Page.
+     * 
+     * @api
+     *
+     * @param mixed $id
+     *
+     * @return void
+     */
+    public function delete($id);
 }
