@@ -3,6 +3,7 @@
 namespace Acme\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ORD;
 use Acme\BlogBundle\Model\PageInterface;
 use Doctrine\Common\Collections\Collection;
 use JMS\Serializer\Annotation as Serializer;
@@ -13,6 +14,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *
  * @ORM\Table()
  * @ORM\Entity()
+ * @ORD\Document()
  * @Serializer\XmlRoot("page")
  * @Hateoas\Relation("self", href = "expr('/api/v1/pages/' ~ object.getId())")
  * @Hateoas\Relation("author", href = "expr('/api/v1/authors/' ~ object.getAuthor().getId())")
@@ -26,6 +28,7 @@ class Page implements PageInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORD\Id
      */
     private $id;
     
@@ -40,6 +43,7 @@ class Page implements PageInterface
     /**
      * @var string
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @ORD\String
      */
     private $title;
 
@@ -47,6 +51,7 @@ class Page implements PageInterface
      * @var string
      *
      * @ORM\Column(name="body", type="text")
+     * @ORD\String
      */
     private $body;
     

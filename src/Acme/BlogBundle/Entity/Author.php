@@ -3,6 +3,8 @@
 namespace Acme\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ORD;
+
 use Acme\BlogBundle\Model\AuthorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use JMS\Serializer\Annotation as Serializer;
@@ -13,6 +15,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Acme\BlogBundle\Entity\AuthorRepository")
+ * @ORD\Document
  * @Serializer\XmlRoot("author")
  * 
  * @Hateoas\Relation("self", href = "expr('/api/v1/authors/' ~ object.getId())")

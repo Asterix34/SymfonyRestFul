@@ -3,12 +3,14 @@
 namespace Acme\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ORD;
 
 /**
  * Comment
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Acme\BlogBundle\Entity\CommentRepository")
+ * @ORD\Document()
  */
 class Comment
 {
