@@ -35,7 +35,7 @@ class CommentController extends FOSRestController
      * @Rest\RequestParam(name="id", requirements="\d+",description="Id of the page")
      * @Rest\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing pages.")
      * @Rest\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
-     * @Rest\Get("/pages/{id}/comments")
+     * @Rest\Get("/v1/pages/{id}/comments")
      *
      * @Rest\View(
      *  templateVar="comments"
@@ -70,18 +70,18 @@ class CommentController extends FOSRestController
      *
      * @Rest\View(templateVar="comment")
      *
-     * @param int     $id      the comment id
-     * @param int     $page_id      the page id
+     * @param int     $id      the page id
+     * @param int     $cid      the comment id
      *
      * @return array
      *
      * @throws NotFoundHttpException when page not exist
      */
-    public function getCommentAction($page_id, $id)
+    public function getCommentAction($id, $cid)
     {
-        $page = $this->getOr404($id);
+        $c = $this->getOr404($cid);
 
-        return $page;
+        return $c;
     }
 
     /**

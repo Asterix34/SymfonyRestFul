@@ -3,11 +3,12 @@
 namespace Acme\BlogBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Acme\BlogBundle\Entity\Comment;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 
-class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
+class LoadCommentData extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface
 {
     /** 
      * {@inheritDoc}

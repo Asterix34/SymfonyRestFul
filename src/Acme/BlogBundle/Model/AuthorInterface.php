@@ -2,7 +2,7 @@
 
 namespace Acme\BlogBundle\Model;
 
-Interface AuthorInterface
+Interface AuthorInterface extends ModelInterface
 {
     /**
      * Set title

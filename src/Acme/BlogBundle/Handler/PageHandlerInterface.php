@@ -2,7 +2,7 @@
 
 namespace Acme\BlogBundle\Handler;
 
-use Acme\BlogBundle\Model\PageInterface;
+use Acme\BlogBundle\Model\ModelInterface;
 
 interface PageHandlerInterface
 {
@@ -13,7 +13,7 @@ interface PageHandlerInterface
      *
      * @param mixed $id
      *
-     * @return PageInterface
+     * @return ModelInterface
      */
     public function get($id);
 
@@ -34,7 +34,7 @@ interface PageHandlerInterface
      *
      * @param array $parameters
      *
-     * @return PageInterface
+     * @return ModelInterface
      */
     public function post(array $parameters);
 
@@ -43,24 +43,24 @@ interface PageHandlerInterface
      *
      * @api
      *
-     * @param PageInterface   $page
+     * @param ModelInterface   $page
      * @param array           $parameters
      *
-     * @return PageInterface
+     * @return ModelInterface
      */
-    public function put(PageInterface $page, array $parameters);
+    public function put(ModelInterface $page, array $parameters);
 
     /**
      * Partially update a Page.
      *
      * @api
      *
-     * @param PageInterface   $page
+     * @param ModelInterface   $page
      * @param array           $parameters
      *
-     * @return PageInterface
+     * @return ModelInterface
      */
-    public function patch(PageInterface $page, array $parameters);
+    public function patch(ModelInterface $page, array $parameters);
     
     /**
      * Delete a Page.

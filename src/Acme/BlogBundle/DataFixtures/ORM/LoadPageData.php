@@ -6,8 +6,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Acme\BlogBundle\Entity\Page;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 
-class LoadPageData extends AbstractFixture implements OrderedFixtureInterface
+class LoadPageData extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface
 {
     /** 
      * {@inheritDoc}

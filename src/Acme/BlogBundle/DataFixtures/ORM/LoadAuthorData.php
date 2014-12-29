@@ -3,11 +3,12 @@
 namespace Acme\BlogBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Acme\BlogBundle\Entity\Author;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 
-class LoadAuthorData extends AbstractFixture implements OrderedFixtureInterface
+class LoadAuthorData extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface
 {
     /** 
      * {@inheritDoc}

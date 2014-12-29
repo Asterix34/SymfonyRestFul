@@ -4,9 +4,11 @@ namespace Acme\BlogBundle\Handler;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\FormFactoryInterface;
-use Acme\BlogBundle\Model\PageInterface;
+use Acme\BlogBundle\Model\ModelInterface;
 use Acme\BlogBundle\Form\PageType;
 use Acme\BlogBundle\Exception\InvalidFormException;
+use Acme\BlogBundle\Form\AuthorType;
+use Acme\BlogBundle\Form\CommentType;
 
 class PageHandler implements PageHandlerInterface
 {
@@ -28,7 +30,7 @@ class PageHandler implements PageHandlerInterface
      *
      * @param mixed $id
      *
-     * @return PageInterface
+     * @return ModelInterface
      */
     public function get($id)
     {
@@ -53,7 +55,7 @@ class PageHandler implements PageHandlerInterface
      *
      * @param array $parameters
      *
-     * @return PageInterface
+     * @return ModelInterface
      */
     public function post(array $parameters)
     {
@@ -65,27 +67,27 @@ class PageHandler implements PageHandlerInterface
     /**
      * Edit a Page.
      *
-     * @param PageInterface $page
+     * @param ModelInterface $page
      * @param array         $parameters
      *
-     * @return PageInterface
+     * @return ModelInterface
      */
-    public function put(PageInterface $page, array $parameters)
+    public function put(ModelInterface $model, array $parameters)
     {
-        return $this->processForm($page, $parameters, 'PUT');
+        return $this->processForm($model, $parameters, 'PUT');
     }
 
     /**
      * Partially update a Page.
      *
-     * @param PageInterface $page
+     * @param ModelInterface $page
      * @param array         $parameters
      *
-     * @return PageInterface
+     * @return ModelInterface
      */
-    public function patch(PageInterface $page, array $parameters)
+    public function patch(ModelInterface $model, array $parameters)
     {
-        return $this->processForm($page, $parameters, 'PATCH');
+        return $this->processForm($model, $parameters, 'PATCH');
     }
     
     /**
@@ -97,8 +99,8 @@ class PageHandler implements PageHandlerInterface
      */
     public function delete($id)
     {
-    	$page = $this->get($id);
-    	$this->om->remove($page);
+    	$model = $this->get($id);
+    	$this->om->remove($model);
     	$this->om->flush ();
     	
     	return null;
@@ -107,25 +109,38 @@ class PageHandler implements PageHandlerInterface
     /**
      * Processes the form.
      *
-     * @param PageInterface $page
+     * @param ModelInterface $model
      * @param array         $parameters
      * @param String        $method
      *
-     * @return PageInterface
+     * @return ModelInterface
      *
      * @throws \Acme\BlogBundle\Exception\InvalidFormException
      */
-    private function processForm(PageInterface $page, array $parameters, $method = "PUT")
+    private function processForm(ModelInterface $model, array $parameters, $method = "PUT")
     {
-        $form = $this->formFactory->create(new PageType(), $page, array('method' => $method));
+    	switch (get_class($model)) {
+    		case 'Acme\BlogBundle\Entity\Author':
+    			$form = new AuthorType();
+    			break;
+    		case 'Acme\BlogBundle\Entity\Comment':
+    			$form = new CommentType();
+    			break;
+    		default:
+    		case 'Acme\BlogBundle\Entity\Page':
+    				$form = new PageType();
+    				break;
+    		
+    	}
+        $form = $this->formFactory->create($form, $model, array('method' => $method));
         $form->submit($parameters, 'PATCH' !== $method);
         if ($form->isValid()) {
 
-            $page = $form->getData();
-            $this->om->persist($page);
-            $this->om->flush($page);
+            $model = $form->getData();
+            $this->om->persist($model);
+            $this->om->flush($model);
 
-            return $page;
+            return $model;
         }
 
         throw new InvalidFormException('Invalid submitted data', $form);
